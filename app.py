@@ -1,5 +1,7 @@
 from flask import Flask
 from flask_cors import CORS
+# from flask_migrate import Migrate, MigrateCommand
+
 from src.controller.database import Base
 from src.controller.database.database import SessionLocal, engine, init_db
 from src.view.hello import blueprint
@@ -18,6 +20,8 @@ def create_app():
 
 app = create_app()
 app.register_blueprint(blueprint, url_prefix='/hello')
+
+init_db()
 
 @app.teardown_appcontext
 def remove_session(*args, **kwargs):

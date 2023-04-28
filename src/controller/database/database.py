@@ -12,11 +12,8 @@ SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 Base = declarative_base()
 
-
 def init_db():
-    import model.dbmodel.inventory_model
-    import model.dbmodel.item_model
 
-    print(model)
+    Base.metadata.create_all(bind=engine)
 
-    model.dbmodel.Base.metadata.create_all(bind=engine)
+    print(Base)
