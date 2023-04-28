@@ -1,0 +1,72 @@
+version: '2.1'
+services:
+  mariadb:
+    image: mariadb:11.0-rc
+    container_name: mariadb
+    platform: linux/amd64
+    ports:
+      - 3306:3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=1234
+      - MYSQL_PASSWORD=password55
+      - MYSQL_USER=flask_user
+      - MYSQL_DATABASE=flask_docker
+    networks:
+      - common-net
+    healthcheck:
+      test: "exit 0"
+  redis: 
+    image: redislabs/redismod
+    container_name: redis
+    ports:
+      - '6379:6379' 
+    networks:
+      - common-net
+  flask:
+    build: .
+    container_name: flask
+    ports:
+      - "5000:5000"
+    volumes:
+      - .:/code
+    links:
+      - mariadb
+    depends_on:
+      - mariadb      
+      - redis
+    environment:
+      - FLASK_APP=app.py
+      - JWT_SECRET_KEY=aStrongPassword
+      - SQLALCHEMY_DATABASE_USERNAME=flask_user
+      - SQLALCHEMY_DATABASE_PASSWORD=password55
+      - SQLALCHEMY_DATABASE_HOST=mariadb:3306
+      - SQLALCHEMY_DATABASE_DBNAME=flask_docker
+    networks:
+      - common-net
+  # debugging GUI
+  phpmyadmin:
+    depends_on:
+      - mariadb
+    image: phpmyadmin/phpmyadmin:latest
+    container_name: flask_phpmyadmin
+    restart: unless-stopped
+    labels:
+      project: "flask"
+      day: "9 Sep 2019"
+    ports:
+      - "5010:80"
+    environment:
+      PMA_HOST: mariadb
+      PMA_USER: flask_user
+      PMA_PASSWORD: password55
+      MYSQL_ROOT_PASSWORD: 1234
+    networks:
+      - common-net
+
+networks:
+  common-net: {}
+# secrets:
+#    db_password:
+#      file: db_password.txt
+#    db_root_password:
+#      file: db_root_password.txt
