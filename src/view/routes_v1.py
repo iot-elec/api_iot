@@ -10,4 +10,11 @@ blueprint_v1 = Blueprint('blueprint_v1', __name__)
 def v1_get_inventory_details(card_id):
     return get_inventory_details(card_id)
 
-# v1blueprint.route('/checkout', methods=['POST'])(pay)
+@blueprint_v1.route('/checkout', methods=['POST'])
+def v1_checkout():
+    content_type = request.headers.get('Content-Type')
+    if (content_type == 'application/json'):
+        json = request.json
+        return pay(json)
+    else:
+        return 'Content-Type not supported!', 400
