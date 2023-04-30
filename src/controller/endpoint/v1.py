@@ -6,34 +6,12 @@ from src.controller.utils import str_to_list_int
 from src.model.dbmodel.model import InventoryModel, ItemModel
 
 from src.controller.database.database import SessionLocal
-import logging
-
-# {
-# 			"inventoryId": [18, 78, 75, 4, 144, 0],
-# 			"itemModel": {
-# 				"itemID": 1,
-# 				"itemName": "Mature Cheddar Cheese 400G",
-# 				"productDescription": {
-# 					"details": "Mature Cheddar cheese.100% British milk.\\n Hand selected cheese for a strong and full flavour",
-# 					"size": 400,
-# 					"unitSize": "G"
-# 				},
-# 				"allergyInformation": "Contains milk"
-# 			},
-# 			"exp": "2023-04-25",
-# 			"mfg": "2023-04-09",
-# 			"price": 6.02,
-# 			"priceUnit": "GBP"
-# 		}
-
-
 
 def get_inventory_details(card_id: str):
     session = SessionLocal()
-    print(card_id, file=sys.stderr)
     card_id_list = str_to_list_int(card_id)
-    print(card_id_list, file=sys.stderr)
 
+	# TODO: read from cache insted of DB
 
     if (card_id_list == -1):
         return jsonify({}), 400
@@ -42,7 +20,7 @@ def get_inventory_details(card_id: str):
 
         inventory_joined = session.query(InventoryModel, ItemModel).join(InventoryModel, ItemModel.id == InventoryModel.itemModelId).filter(InventoryModel.isBuy == False).filter(InventoryModel.inventoryId ==str(card_id_list) ).first()
         res = {
-			"inventoryId": inventory_joined.InventoryModel.inventoryId,
+			"inventoryId": str_to_list_int(inventory_joined.InventoryModel.inventoryId),
 			"itemModel": {
 				"itemID": inventory_joined.ItemModel.id,
 				"itemName": inventory_joined.ItemModel.itemName,
