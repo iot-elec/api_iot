@@ -1,7 +1,7 @@
 from flask import Blueprint
 from src.controller.endpoint.hello import hello, greet
 
-blueprint = Blueprint('blueprint', __name__)
+blueprint_hello = Blueprint('blueprint_hello', __name__)
 
-blueprint.route('/hello', methods=['GET'])(hello)
-blueprint.route('/', methods=['GET'])(greet)
+blueprint_hello.route('/hello', methods=['GET'])(hello)
+blueprint_hello.route('/', methods=['GET'])(greet)

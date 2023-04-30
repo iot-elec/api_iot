@@ -46,6 +46,24 @@ To stop the flask server press Control-C.
 the URI of the database and jwt is a secret.
 Database url is in this format postgresql://username:password@host:port/database
 
+## migration
+We are using alembic to deal with migration
+###commands
+
+Init alembic instance
+```
+alembic init alembic
+```
+
+create migration scripts
+```
+alembic revision -m "create migration scripts"
+```
+
+migrate to DB
+```
+alembic upgrade head
+```
 
 ## Run the api on the docker environment
 ```
