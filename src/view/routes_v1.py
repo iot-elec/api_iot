@@ -1,3 +1,4 @@
+import sys
 from flask import Blueprint
 from flask import Flask, request, jsonify
 
@@ -12,8 +13,9 @@ def v1_get_inventory_details(card_id):
 
 @blueprint_v1.route('/checkout', methods=['POST'])
 def v1_checkout():
+    
     content_type = request.headers.get('Content-Type')
-    if (content_type == 'application/json'):
+    if (content_type == 'application/json' or content_type == 'application/json; charset=utf-8'):
         json = request.json
         return pay(json)
     else:

@@ -1,7 +1,7 @@
 import sys
 from flask import Flask, request, jsonify
 from sqlalchemy import JSON
-from src.controller.utils import str_to_list_int
+from src.controller.utils import convert_date_format, str_to_list_int
 
 from src.model.dbmodel.model import InventoryModel, ItemModel
 
@@ -31,8 +31,8 @@ def get_inventory_details(card_id: str):
 				},
 				"allergyInformation": inventory_joined.ItemModel.allergyInformation
 			},
-			"exp": inventory_joined.InventoryModel.expire,
-			"mfg": inventory_joined.InventoryModel.manufacturing,
+			"exp": convert_date_format(inventory_joined.InventoryModel.expire),
+			"mfg": convert_date_format(inventory_joined.InventoryModel.manufacturing),
 			"price": inventory_joined.InventoryModel.price,
 			"priceUnit": inventory_joined.InventoryModel.priceUnit
 		}
@@ -51,6 +51,8 @@ def pay(json: JSON):
 	session = SessionLocal()
 	id_list = json['id']
 	for id in id_list:
+		if (type(id) == list):
+			continue
 		id = str(str_to_list_int(id))
 
 	try:
