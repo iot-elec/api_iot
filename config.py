@@ -8,6 +8,7 @@ class Config(object):
     SECRET_KEY = os.getenv('JWT_SECRET_KEY')
     SQLALCHEMY_POOL_SIZE=20
     SQLALCHEMY_POOL_TIMEOUT=30
+    EXPTIME= os.getenv('EXP_TIME')
 
 class ProductionConfig(Config):
     SQLALCHEMY_DATABASE_URI = os.getenv('SQLALCHEMY_DATABASE_URI_PROD')
