@@ -1,8 +1,22 @@
-# from flask import Blueprint
-# from src.controller.hello import hello
+import sys
+from flask import Blueprint
+from flask import Flask, request, jsonify
 
-# blueprint = Blueprint('blueprint', __name__)
+from src.controller.endpoint.v1 import get_inventory_details, pay
 
-# blueprint.route('/', methods=['GET'])(hello)
-# blueprint.route('/create', methods=['GET'])(create)
-# blueprint.route('/insert', methods=['GET'])(insert)
+
+blueprint_v1 = Blueprint('blueprint_v1', __name__)
+
+@blueprint_v1.route('/get-inventory-details/<card_id>', methods=['GET'])
+def v1_get_inventory_details(card_id):
+    return get_inventory_details(card_id)
+
+@blueprint_v1.route('/checkout', methods=['POST'])
+def v1_checkout():
+    
+    content_type = request.headers.get('Content-Type')
+    if (content_type == 'application/json' or content_type == 'application/json; charset=utf-8'):
+        json = request.json
+        return pay(json)
+    else:
+        return 'Content-Type not supported!', 400

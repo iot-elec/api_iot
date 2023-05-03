@@ -41,6 +41,7 @@ services:
       - SQLALCHEMY_DATABASE_PASSWORD=password55
       - SQLALCHEMY_DATABASE_HOST=mariadb:3306
       - SQLALCHEMY_DATABASE_DBNAME=flask_docker
+      - EXP_TIME=10800
     networks:
       - common-net
   # debugging GUI

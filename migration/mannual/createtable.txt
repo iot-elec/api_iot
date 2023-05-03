@@ -1,0 +1,23 @@
+CREATE TABLE Item (
+    id INTEGER NOT NULL AUTO_INCREMENT, 
+    itemName VARCHAR(127), 
+    details VARCHAR(1023), 
+    allergyInformation VARCHAR(63), 
+    size INTEGER, 
+    unitSize VARCHAR(3), 
+    isActive BOOLEAN DEFAULT TRUE, 
+    PRIMARY KEY (id)
+);
+
+CREATE TABLE Inventory (
+    id INTEGER NOT NULL AUTO_INCREMENT, 
+    itemModelId INTEGER, 
+    inventoryId VARCHAR(63), 
+    manufacturing DATE,
+    expire DATE, 
+    price FLOAT, 
+    priceUnit VARCHAR(5), 
+    isBuy BOOLEAN DEFAULT FALSE, 
+    PRIMARY KEY (id), 
+    FOREIGN KEY(itemModelId) REFERENCES Item (id)
+);

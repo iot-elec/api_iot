@@ -1,12 +1,12 @@
 from flask import Flask
 from flask_cors import CORS
-from src.controller.database import Base
-from src.controller.database.database import SessionLocal, engine, init_db
-from src.view.hello import blueprint
-from sqlalchemy.orm import scoped_session
-import config
+# from flask_migrate import Migrate, MigrateCommand
 
-Base.metadata.create_all(bind=engine)
+# from src.controller.database import Base
+from src.controller.database.database import SessionLocal, engine, init_db
+from sqlalchemy.orm import scoped_session
+
+from src.view.routes_v1 import blueprint_v1
 
 def create_app():
     app = Flask(__name__) 
@@ -17,7 +17,9 @@ def create_app():
     return app
 
 app = create_app()
-app.register_blueprint(blueprint, url_prefix='/hello')
+app.register_blueprint(blueprint_v1, url_prefix='/v1')
+
+init_db()
 
 @app.teardown_appcontext
 def remove_session(*args, **kwargs):

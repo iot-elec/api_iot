@@ -1,0 +1,17 @@
+INSERT INTO Item (itemName, details, allergyInformation, size, unitSize, isActive)
+VALUES ('Mature Cheddar Cheese 400G', 'Mature Cheddar cheese.100% British milk.\\n Hand selected cheese for a strong and full flavour', 'Contains milk', 400, 'G', true);
+
+INSERT INTO Item (itemName, details, allergyInformation, size, unitSize, isActive)
+VALUES ('Extra Mature Cheddar Cheese 400G', 'Extra mature Cheddar cheese.100% British milk.\\n Hand selected cheese for a strong and full flavour', 'Contains milk', 400, 'G', true);
+
+INSERT INTO Item (itemName, details, allergyInformation, size, unitSize, isActive)
+VALUES ('Philadelphia Original Soft Cheese 280G', 'Full fat soft cheese.\\nFresh and creamy taste\\nMade with Simply Good Ingredients Milk, Cream, Pinch of Salt\\nMade with pasteurised milk\\nNo Preservatives\\nSuitable for Vegetarians,', 'Contains milk', 280, 'G', true);
+
+INSERT INTO Inventory (inventoryId, expire, manufacturing, price, priceUnit, itemModelId, isBuy)
+VALUES ('[18, 78, 75, 4, 144, 0]', '2023-04-25', '2023-04-09', 6.02, 'GBP', 1, false);
+
+INSERT INTO Inventory (inventoryId, expire, manufacturing, price, priceUnit, itemModelId, isBuy)
+VALUES ('[78, 4, 76, 4, 144, 0]', '2023-04-20', '2023-04-10', 5.02, 'GBP', 2, false);
+
+INSERT INTO Inventory (inventoryId, expire, manufacturing, price, priceUnit, itemModelId, isBuy)
+VALUES ('[253, 71, 75, 4, 144, 0]', '2023-04-30', '2023-04-11', 3.02, 'GBP', 3, false);
